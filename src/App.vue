@@ -2,11 +2,35 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/account">
+      Account {{storage.getters.authorized == "true" ? "("+storage.getters.user+")" : ""}}
+      </router-link>
+      <button v-on:click="logout">Logout</button>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import store from '@/store/index.js'
+import router from '@/router/index.js'
+
+export default {
+  data() {
+    return {
+    storage: store,
+    }
+  },
+  methods: {
+    logout: function() {
+      store.commit('setUser', "");
+      store.commit('setPassword', "");
+      store.commit('setAuthorized', "false");
+      router.push('/login');
+    }
+  }
+}
+</script>
 
 <style>
 #app {
