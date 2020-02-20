@@ -67,14 +67,14 @@ export default {
 
             axios(request_config)
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 this.username = response.data.username;
                 this.email = response.data.email;
                 store.commit("setAuthorized", false);
                 window.location.reload();
             })
             .catch(error => {
-                console.log(error.response.data);
+                // console.log(error.response.data);
                 this.msg = error.response.data;
             })
         },
@@ -96,8 +96,8 @@ export default {
                 store.commit('setAuthorized', false);
                 window.location.reload();
             })
-            .catch(error => {
-                console.log(error.response.data);
+            .catch(() => {
+                // console.log(error.response.data);
             })
             }
         }
