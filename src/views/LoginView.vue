@@ -1,14 +1,19 @@
 <template>
 <div>
-    <form class="login" @submit.prevent="login">
+    <form class="login" @submit.prevent="login" novalidate>
     <h1>Sign in</h1>
-    <label>Username</label>
-    <input required v-model="username" type="username" placeholder="Name"/>
+    <!-- <label>Username</label> -->
+    <input required v-model="username" type="username" placeholder="Username"/>
     <br>
-    <label>Password</label>
+    <br>
+    <!-- <label>Password</label> -->
     <input required v-model="password" type="password" placeholder="Password"/>
     <br>
+    <br>
+    <span>
     <button type="submit">Login</button>
+    <NewUser/>
+    </span>
     </form>
     <p v-if="msg!=''">{{msg}}</p>
 </div>
@@ -17,8 +22,13 @@
 import store from '@/store/index.js'
 import axios from 'axios';
 import router from '@/router/index.js'
+import NewUser from '@/components/NewUser'
 
 export default {
+    name: "LoginView",
+    components: {
+        NewUser,
+    },
     data() {
         return {
         username: String(),

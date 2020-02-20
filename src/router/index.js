@@ -36,12 +36,6 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/LoginView')
   },
-
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import ('@/views/RegistrationView')
-  }
 ]
 
 const router = new VueRouter({

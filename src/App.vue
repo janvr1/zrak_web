@@ -5,7 +5,7 @@
       <router-link to="/account">
       Account {{storage.getters.authorized == "true" ? "("+storage.getters.user+")" : ""}}
       </router-link>
-      <button v-on:click="logout">Logout</button>
+      <span @click="logout">Logout</span>
     </div>
     <router-view/>
   </div>
@@ -28,6 +28,9 @@ export default {
       store.commit('setAuthorized', "false");
       router.push('/login');
     }
+  },
+  components: {
+
   }
 }
 </script>

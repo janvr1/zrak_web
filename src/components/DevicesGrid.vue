@@ -1,32 +1,39 @@
 <template>
-    <div v-if="Object.keys(devices).length > 0" class="grid-container">
-        <div
-            v-for="device in devices"
-            v-bind:key="device.id" class="grid-item">
-        <router-link v-bind:to="'/device/' + device.id">
-        <DeviceCard v-bind:device="device"/>
-        </router-link>
+    <div>
+        <div v-if="Object.keys(devices).length > 0" class="grid-container">
+            <div
+                v-for="device in devices"
+                v-bind:key="device.id" class="grid-item">
+            <router-link v-bind:to="'/device/' + device.id">
+            <DeviceCard v-bind:device="device"/>
+            </router-link>
+            </div>
+            <div class="grid-item">
+            <NewDevice/>
         </div>
-    </div>
-    <div v-else>
-        {{msg}}
+        </div>
+        <div v-else class="grid-item">
+            <NewDevice/>
+        </div>
     </div>
 </template>
 
 <script>
 import DeviceCard from "@/components/DeviceCard"
+import NewDevice from '@/components/NewDevice'
 import axios from "axios"
 import store from '@/store/index.js'
 
 export default {
     name: "DevicesGrid",
     components: {
-        DeviceCard
+        DeviceCard,
+        NewDevice
     },
     data() {
         return {
             devices: Object(),
-            msg: String(),
+            msg: "Add a new device",
         }
     },
     mounted() {

@@ -1,6 +1,9 @@
 <template>
     <div>
-        <DeviceInfoBox v-bind:device="device"/>
+        <span>
+            <DeviceInfoBox v-bind:device="device"/>
+            <EditDevice v-bind:dev_id="device_id"/>
+        </span>
         <MeasurementsBox v-bind:id="device_id"/>
     </div>
 </template>
@@ -9,6 +12,7 @@
 import axios from "axios"
 import DeviceInfoBox from '@/components/DeviceInfoBox'
 import MeasurementsBox from '@/components/MeasurementsBox'
+import EditDevice from '@/components/EditDevice'
 import store from '@/store/index.js'
 
 
@@ -17,6 +21,7 @@ export default {
     components: {
         DeviceInfoBox,
         MeasurementsBox,
+        EditDevice
     },
 
     created() {
