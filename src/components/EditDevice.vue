@@ -7,7 +7,7 @@
             <h3>Add new device</h3>
             <form @submit.prevent="editDevice">
             <!-- <label>Name</label> -->
-            <input required v-model="name" type="text" placeholder="Device name"/>
+            <input v-model="name" type="text" placeholder="Device name"/>
             <br>
             <!-- <label>Location</label> -->
             <input v-model="location" type="text" placeholder="Device location"/>

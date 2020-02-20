@@ -1,121 +1,114 @@
 <template>
-  <span>
-    <transition name="modal">
-      <div v-if="isOpen">
-        <div class="overlay" @click.self="isOpen = false;">
-          <div class="modal">
-            <h3>Register</h3>
-            <form class="login" @submit.prevent="addNewUser">
-            <label>Username</label>
-            <input required v-model="user" type="text" placeholder="Username"/>
-            <br>
-            <label>E-mail</label>
-            <input v-model="email" type="text" placeholder="john@example.com"/>
-            <br>
-            <label>Password</label>
-            <input required v-model="pass" type="password" placeholder="Password"/>
-            <br>
-            <button type="submit">Register</button>
-            <button type="reset" @click="isOpen=false">Cancel</button>
-            </form>
-            <div v-if="msg!=''"> {{msg}} </div>
+  <div>
+    <div v-if="isOpen" class="modal is-active">
+      <div class="modal-background" @click.self="isOpen=false">
+        <div class="modal-content">
+          <div class="level">
+            <div class="box">
+              <h3 class="title is-3">Register</h3>
+              <form class="login" @submit.prevent="addNewUser">
+                <div class="field">
+                  <label class="label">Username</label>
+                  <div class="control">
+                    <input required v-model="user" type="text" placeholder="Username" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">E-mail</label>
+                  <div class="control">
+                    <input v-model="email" type="email" placeholder="john@example.com" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Password</label>
+                  <div class="control">
+                    <input required v-model="pass" type="password" placeholder="Password" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Confirm password</label>
+                  <div class="control">
+                    <input
+                      required
+                      v-model="confirm_pass"
+                      type="password"
+                      placeholder="Confirm password"
+                    />
+                  </div>
+                </div>
+                <div class="field is-grouped">
+                  <div class="control">
+                    <button class="button is-link" type="submit">Register</button>
+                  </div>
+                  <div class="control">
+                    <button
+                      class="button is-link is-light"
+                      type="reset"
+                      @click="isOpen=false"
+                    >Cancel</button>
+                  </div>
+                </div>
+              </form>
+              <div v-if="msg!=''">{{msg}}</div>
+            </div>
           </div>
         </div>
       </div>
-    </transition>
-    <button @click="isOpen = true">
-      Register
-    </button>
-  </span>
+      <button @click="isOpen=false" class="modal-close is-large" aria-label="close"></button>
+    </div>
+    <div class="box" @click="isOpen = true">Don't yet have an account? Register here</div>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-    name: "NewUser",
-    data() {
-        return {
-            isOpen: false,
-            user: String(),
-            email: String(),
-            pass: String(),
-            msg: String()
-        }
-    },
-    methods: {
-        addNewUser: function() {
-            let username = this.user;
-            let email = this.email;
-            let password = this.pass;
+  name: "NewUser",
+  data() {
+    return {
+      isOpen: false,
+      user: String(),
+      email: String(),
+      pass: String(),
+      confirm_pass: String(),
+      msg: String()
+    };
+  },
+  methods: {
+    addNewUser: function() {
+      let username = this.user;
+      let email = this.email;
+      let password = this.pass;
+      let confirm_password = this.confirm_pass;
 
-            let request_data = Object();
-            if (username != "") request_data.username = username;
-            if (email != "") request_data.email = email;
-            if (password != "") request_data.password = password;
-            
-            let request_config =  {
-              method: 'post',
-              url: 'http://api.zrak.janvr.wtf/users',
-              data: request_data
-            }
+      if (password != confirm_password) {
+        this.msg = "Passwords do not match";
+        return;
+      }
 
-            axios(request_config)
-            .then(() => {
-              window.location.reload();
-            })
-            .catch(error => {
-              this.msg = error.response.data;
-            })
-        }
+      let request_data = Object();
+      if (username != "") request_data.username = username;
+      if (email != "") request_data.email = email;
+      if (password != "") request_data.password = password;
+
+      let request_config = {
+        method: "post",
+        url: "http://api.zrak.janvr.wtf/users",
+        data: request_data
+      };
+
+      axios(request_config)
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(error => {
+          this.msg = error.response.data;
+        });
     }
-}
+  }
+};
 </script>
 
 <style scoped>
-.modal {
-  width: 500px;
-  margin: 0px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px 3px;
-  transition: all 0.2s ease-in;
-  font-family: Helvetica, Arial, sans-serif;
-}
-.fadeIn-enter {
-  opacity: 0;
-}
-
-.fadeIn-leave-active {
-  opacity: 0;
-  transition: all 0.2s step-end;
-}
-
-.fadeIn-enter .modal,
-.fadeIn-leave-active.modal {
-  transform: scale(1.1);
-}
-
-/* button {
-  padding: 7px;
-  margin-top: 10px;
-  background-color: green;
-  color: white;
-  font-size: 1.1rem;
-} */
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: #00000094;
-  z-index: 999;
-  transition: opacity 0.2s ease;
-}
 </style>
