@@ -99,11 +99,11 @@ export default {
             };
 
             axios(request_config)
-            .then(response => {
+            .then(() => {
                 router.push('/home');
                 // console.log(response.data);
             })
-            .catch(error => {
+            .catch(() => {
                 // console.log(error.response.data);
             });
         }
