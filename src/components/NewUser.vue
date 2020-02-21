@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="isOpen" class="modal is-active">
+  <!-- <div> -->
+    <div class="modal" :class="{'is-active':isOpen}">
       <div class="modal-background" @click.self="isOpen=false">
         <div class="modal-content">
           <div class="level">
@@ -56,8 +56,8 @@
       </div>
       <button @click="isOpen=false" class="modal-close is-large" aria-label="close"></button>
     </div>
-    <div class="box" @click="isOpen = true">Don't yet have an account? Register here</div>
-  </div>
+    <!-- <div class="box" @click="isOpen = true">Don't yet have an account? Register here</div> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -67,13 +67,16 @@ export default {
   name: "NewUser",
   data() {
     return {
-      isOpen: false,
+      // isOpen: this.isOpen_prop,
       user: String(),
       email: String(),
       pass: String(),
       confirm_pass: String(),
       msg: String()
     };
+  },
+  props: {
+    isOpen_prop: Boolean()
   },
   methods: {
     addNewUser: function() {
@@ -111,4 +114,11 @@ export default {
 </script>
 
 <style scoped>
+#register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f7f7f7;
+}
 </style>

@@ -1,6 +1,5 @@
 <template>
-  <!-- <div class="column"> -->
-  <div class="level">
+  <div id="login">
     <div class="box">
       <h1 class="title">Sign in</h1>
       <form class="login" @submit.prevent="userLogin">
@@ -22,15 +21,15 @@
             <button class="button is-link" @click="userLogin()">Login</button>
           </div>
         </div>
-        <div class="field">
-          <div class="control">
-            <NewUser />
-          </div>
-        </div>
       </form>
+      <div class="field">
+        <div class="control">
+          <button @click="openModal()" />
+        </div>
+      </div>
     </div>
+    <NewUser :isOpen_prop="modalActive" />
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -48,7 +47,8 @@ export default {
     return {
       username: String(),
       password: String(),
-      msg: String()
+      msg: String(),
+      modalActive: false
       // storage: store,
     };
   },
@@ -76,10 +76,20 @@ export default {
           store.commit("setAuthorized", "false");
           this.msg = error.response.data;
         });
+    },
+    openModal: function() {
+      this.modalActive = true;
     }
   }
 };
 </script>
 
 <style scoped>
+#login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f7f7f7;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="container" id="app">
     <div v-if="storage.getters.authorized == 'true'" id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/account">
