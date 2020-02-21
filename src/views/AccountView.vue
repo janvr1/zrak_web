@@ -102,7 +102,7 @@ export default {
       if (new_email != "") request_data.email = new_email;
       if (new_password != "") request_data.password = new_password;
 
-      console.log(request_data);
+      // console.log(request_data);
 
       let request_config = {
         method: "put",

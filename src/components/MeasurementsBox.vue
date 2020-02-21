@@ -52,12 +52,12 @@ export default {
       };
 
       axios(request_config)
-        .then(response => {
-          console.log(response);
+        .then(() => {
+          // console.log(response);
           window.location.reload();
         })
-        .catch(error => {
-          console.log(error.response.data);
+        .catch(() => {
+          // console.log(error.response.data);
         });
     }
   },
