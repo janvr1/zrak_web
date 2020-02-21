@@ -1,63 +1,54 @@
 <template>
-  <!-- <div> -->
-    <div class="modal" :class="{'is-active':isOpen}">
-      <div class="modal-background" @click.self="isOpen=false">
-        <div class="modal-content">
-          <div class="level">
-            <div class="box">
-              <h3 class="title is-3">Register</h3>
-              <form class="login" @submit.prevent="addNewUser">
-                <div class="field">
-                  <label class="label">Username</label>
-                  <div class="control">
-                    <input required v-model="user" type="text" placeholder="Username" />
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">E-mail</label>
-                  <div class="control">
-                    <input v-model="email" type="email" placeholder="john@example.com" />
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Password</label>
-                  <div class="control">
-                    <input required v-model="pass" type="password" placeholder="Password" />
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Confirm password</label>
-                  <div class="control">
-                    <input
-                      required
-                      v-model="confirm_pass"
-                      type="password"
-                      placeholder="Confirm password"
-                    />
-                  </div>
-                </div>
-                <div class="field is-grouped">
-                  <div class="control">
-                    <button class="button is-link" type="submit">Register</button>
-                  </div>
-                  <div class="control">
-                    <button
-                      class="button is-link is-light"
-                      type="reset"
-                      @click="isOpen=false"
-                    >Cancel</button>
-                  </div>
-                </div>
-              </form>
-              <div v-if="msg!=''">{{msg}}</div>
-            </div>
-          </div>
+  <div id="register" class="box">
+    <h1 class="title">Register</h1>
+    <form @submit.prevent="addNewUser()" style="text-align:left">
+      <div class="field">
+        <label class="label">Username</label>
+        <div class="control">
+          <input class="input" required v-model="user" type="text" placeholder="Username" />
         </div>
       </div>
-      <button @click="isOpen=false" class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <!-- <div class="box" @click="isOpen = true">Don't yet have an account? Register here</div> -->
-  <!-- </div> -->
+      <div class="field">
+        <label class="label">E-mail</label>
+        <div class="control">
+          <input class="input" v-model="email" type="email" placeholder="john@example.com" />
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input required class="input" v-model="pass" type="password" placeholder="Password" />
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Confirm password</label>
+        <div class="control">
+          <input
+            required
+            v-model="confirm_pass"
+            class="input"
+            type="password"
+            placeholder="Confirm password"
+          />
+        </div>
+      </div>
+      <article v-if="msg!=''" class="message is-danger">
+        <div class="message-body is-danger">{{msg}}</div>
+      </article>
+      <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+          <button type="submit" class="button is-link">Register</button>
+        </div>
+        <div class="control">
+          <button
+            class="button is-link is-light"
+            type="reset"
+            @click.prevent="$emit('close')"
+          >Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -75,9 +66,7 @@ export default {
       msg: String()
     };
   },
-  props: {
-    isOpen_prop: Boolean()
-  },
+
   methods: {
     addNewUser: function() {
       let username = this.user;
@@ -114,11 +103,10 @@ export default {
 </script>
 
 <style scoped>
-#register {
+/* #register {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background: #f7f7f7;
-}
+} */
 </style>

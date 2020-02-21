@@ -1,75 +1,71 @@
 <template>
-    <div>
-        <div v-if="Object.keys(devices).length > 0" class="grid-container">
-            <div
-                v-for="device in devices"
-                v-bind:key="device.id" class="grid-item">
-            <router-link v-bind:to="'/device/' + device.id">
-            <DeviceCard v-bind:device="device"/>
-            </router-link>
-            </div>
-            <div class="grid-item">
-            <NewDevice/>
+  <div>
+    <Modal v-if="newDeviceActive" @close="newDeviceActive=false">
+      <NewDevice @close="newDeviceActive=false" />
+    </Modal>
+
+    <div class="columns is-multiline">
+      <div v-for="device in devices" :key="device.id" class="column is-one-quarter">
+        <router-link :to="'/device/'+device.id">
+          <DeviceTile :device="device" style="height:100%" />
+        </router-link>
+      </div>
+      <div class="column is-one-quarter">
+        <div class="box" style="height:100%" @click="newDeviceActive=true" id="addNew">
+          <h4 class="title is-4">Add new device</h4>
         </div>
-        </div>
-        <div v-else class="grid-item">
-            <NewDevice/>
-        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import DeviceCard from "@/components/DeviceCard"
-import NewDevice from '@/components/NewDevice'
-import axios from "axios"
-import store from '@/store/index.js'
+import DeviceTile from "./DeviceTile";
+import NewDevice from "./NewDevice";
+import axios from "axios";
+import store from "../store/index";
+import Modal from "./Modal";
 
 export default {
-    name: "DevicesGrid",
-    components: {
-        DeviceCard,
-        NewDevice
-    },
-    data() {
-        return {
-            devices: Object(),
-            msg: "Add a new device",
+  name: "DevicesGrid",
+  components: {
+    DeviceTile,
+    NewDevice,
+    Modal
+  },
+  data() {
+    return {
+      devices: Object(),
+      msg: "Add a new device",
+      newDeviceActive: false
+    };
+  },
+  mounted() {
+    let user = store.getters.user;
+    let pass = store.getters.password;
+    axios
+      .get("http://api.zrak.janvr.wtf/devices", {
+        auth: { username: user, password: pass }
+      })
+      .then(response => {
+        if (Object.keys(response.data).length > 0) {
+          this.devices = response.data;
+        } else {
+          this.msg = "You do not have any devices set up. Add a new one!";
         }
-    },
-    mounted() {
-        let user = store.getters.user;
-        let pass = store.getters.password;
-        axios
-        .get('http://api.zrak.janvr.wtf/devices',
-         {auth: {username: user, password: pass}})
-        .then(response => {
-            if (Object.keys(response.data).length > 0) {
-            this.devices = response.data;
-            } else {
-                this.msg = "You do not have any devices set up. Add a new one!";
-            }
-        })
-        .catch(error => {
-            this.msg = error.response.data;
-        })
-    },
-}
+      })
+      .catch(error => {
+        this.msg = error.response.data;
+      });
+  }
+};
 </script>
 
 <style scoped>
-.grid-container {
-  display: grid;
-  padding: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-.grid-item {
-  border: 0px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-  margin: auto;
-  margin-bottom: 20px;
-  background-color: aqua;
+#addNew {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center;
+  background-color: #76ff03;
 }
 </style>

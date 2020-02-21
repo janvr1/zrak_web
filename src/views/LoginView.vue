@@ -1,34 +1,47 @@
 <template>
-  <div id="login">
-    <div class="box">
-      <h1 class="title">Sign in</h1>
-      <form class="login" @submit.prevent="userLogin">
-        <div class="field">
-          <label class="label">Username</label>
-          <div class="control">
-            <input v-model="username" class="input" type="text" placeholder="Username" />
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Password</label>
-          <div class="control">
-            <input v-model="password" class="input" type="password" placeholder="Password" />
-          </div>
-        </div>
-        <p class="help" v-if="msg!=''">{{msg}}</p>
-        <div class="field">
-          <div class="control" style="text-align: center;">
-            <button class="button is-link" @click="userLogin()">Login</button>
-          </div>
-        </div>
-      </form>
-      <div class="field">
-        <div class="control">
-          <button @click="openModal()" />
+  <div >
+    <Modal v-if="newUserActive" @close="newUserActive=false">
+      <NewUser @close="newUserActive=false" />
+    </Modal>
+
+    <div class="columns is-desktop is-centered is-vcentered">
+      <div class="column is-one-quarter">
+        <div id="login" class="box">
+          <h1 class="title">Sign in</h1>
+          <form @submit.prevent="userLogin()">
+            <div class="field">
+              <label class="label">Username</label>
+              <div class="control">
+                <input required v-model="username" class="input" type="text" placeholder="Username" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">
+                <input required v-model="password" class="input" type="password" placeholder="Password" />
+              </div>
+            </div>
+            <article v-if="msg!=''" class="message is-danger">
+              <div class="message-body is-danger">{{msg}}</div>
+            </article>
+
+            <div class="field">
+              <div class="control" style="text-align: center;">
+                <button type="submit" class="button is-link">Login</button>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control" style="text-align: center;">
+                <button
+                  class="button is-link is-light"
+                  @click.prevent="newUserActive=true"
+                >Don't yet have an account? Register here</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <NewUser :isOpen_prop="modalActive" />
   </div>
 </template>
 
@@ -37,19 +50,20 @@ import store from "@/store/index.js";
 import axios from "axios";
 import router from "@/router/index.js";
 import NewUser from "@/components/NewUser";
+import Modal from "@/components/Modal";
 
 export default {
   name: "LoginView",
   components: {
-    NewUser
+    NewUser,
+    Modal
   },
   data() {
     return {
       username: String(),
       password: String(),
       msg: String(),
-      modalActive: false
-      // storage: store,
+      newUserActive: false
     };
   },
   methods: {
@@ -76,20 +90,17 @@ export default {
           store.commit("setAuthorized", "false");
           this.msg = error.response.data;
         });
-    },
-    openModal: function() {
-      this.modalActive = true;
     }
   }
 };
 </script>
 
 <style scoped>
-#login {
+/* #login {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   background: #f7f7f7;
-}
+} */
 </style>
