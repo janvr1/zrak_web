@@ -35,16 +35,20 @@
 
       <div class="navbar-menu" id="navbarMenu" :class="{'is-active':burgerOpen}">
         <div class="navbar-start">
-          <a class="navbar-item" @click="goHome()"><b>Home</b></a>
-          <a class="navbar-item" @click="goAccount()"><b>Account</b></a>
+          <a class="navbar-item" @click="goHome()">
+            <b>Home</b>
+          </a>
+          <a class="navbar-item" @click="goAccount()">
+            <b>Account</b>
+          </a>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
-            <a @click="logout()" class="button is-link">Logout</a>
+            <a @click="logout()" class="button is-danger">Logout</a>
           </div>
         </div>
       </div>
-          <hr />
+      <hr />
     </nav>
 
     <div @click="burgerOpen=false" id="background">
@@ -56,6 +60,7 @@
 <script>
 import store from "@/store/index.js";
 import router from "@/router/index.js";
+
 
 export default {
   data() {
@@ -96,8 +101,13 @@ export default {
   background-color: lightblue;
   height: 100vh;
 }
+
 #nav {
   background-color: aquamarine;
   margin-bottom: 2%;
+}
+
+#background {
+  background-color: lightblue;
 }
 </style>

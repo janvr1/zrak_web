@@ -1,44 +1,37 @@
 <template>
   <div class="box">
-    <article class="media">
-      <article class="media-content">
-        <p class="title">Device Info</p>
-        <table class="table">
-          <tr>
-            <th>Name</th>
-            <td>{{device.name}}</td>
-          </tr>
-          <tr>
-            <th>Device ID:</th>
-            <td>{{device.id}}</td>
-          </tr>
-          <tr>
-            <th>Location:</th>
-            <td>{{device.location}}</td>
-          </tr>
-          <tr>
-            <th>Time created:</th>
-            <td>{{device.time_created}}</td>
-          </tr>
-          <tr>
-            <th>Variables:</th>
-            <td>{{variables.join(", ")}}</td>
-          </tr>
-        </table>
-        <!-- <div>Name: {{device.name}}</div>
-        <div>ID: {{device.id}}</div>
-        <div>Location: {{device.location}}</div>
-        <div>Time created: {{device.time_created}}</div>
-        <div>Variables: {{variables.join(", ")}}</div>-->
-      </article>
-      <article class="media-right">
-        <button class="button is-link" @click="$emit('editDeviceClicked')">Edit Device</button>
-      </article>
-    </article>
+    <div style="position:relative; text-align:left">
+      <button class="button is-link" id="editDeviceBtn" @click="$emit('editDeviceClicked')">Edit Device</button>
+
+      <p class="title">Device Info</p>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <td>{{device.name}}</td>
+        </tr>
+        <tr>
+          <th>Device ID</th>
+          <td>{{device.id}}</td>
+        </tr>
+        <tr>
+          <th>Location</th>
+          <td>{{device.location}}</td>
+        </tr>
+        <tr>
+          <th>Time created</th>
+          <td>{{moment.utc(this.device.time_created, 'YYYY-MM-DD HH:mm:ss').local().format("H:mm, MMMM Do YYYY")}}</td>
+        </tr>
+        <tr>
+          <th>Variables</th>
+          <td>{{variables.join(", ")}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "DeviceInfoBox",
   props: {
@@ -46,7 +39,17 @@ export default {
     variables: Array
   },
   data() {
-    return {};
+    return {
+      moment: moment
+    };
   }
 };
 </script>
+
+<style scoped>
+#editDeviceBtn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+</style>

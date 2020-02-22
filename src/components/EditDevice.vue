@@ -87,7 +87,7 @@ export default {
     editDevice: function() {
       let dev_name = this.name;
       let dev_location = this.location;
-      let variables = this.variables.replace(/\s/g,'').split(",");
+      let variables = this.variables.replace(/\s/g, "").split(",");
       let user = store.getters.user;
       let pass = store.getters.password;
 

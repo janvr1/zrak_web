@@ -1,14 +1,14 @@
 <template>
-  <div class="container">
+  <div class="container" id="deviceview">
     <Modal v-if="editDeviceActive" @close="editDeviceActive=false">
       <EditDevice :dev_id="device_id" @close="editDeviceActive=false" />
     </Modal>
 
     <div class="columns">
-      <div class="column is-half">
+      <div class="column">
         <MeasurementsBox :id="device_id" :variables="variables" />
       </div>
-      <div class="column is-half">
+      <div class="column is-one-third">
         <DeviceInfoBox
           :device="device"
           :variables="variables"
@@ -74,3 +74,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.columns {
+  background-color: lightblue; 
+ }
+</style>
