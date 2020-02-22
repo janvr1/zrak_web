@@ -90,7 +90,7 @@ export default {
 
       let request_config = {
         method: "put",
-        url: "http://api.zrak.janvr.wtf/devices?device_id=" + this.dev_id,
+        url: "https://api.zrak.janvr.wtf/devices?device_id=" + this.dev_id,
         data: request_data,
         auth: {
           username: user,
@@ -113,7 +113,7 @@ export default {
 
       let request_config = {
         method: "delete",
-        url: "http://api.zrak.janvr.wtf/devices?device_id=" + this.dev_id,
+        url: "https://api.zrak.janvr.wtf/devices?device_id=" + this.dev_id,
         auth: {
           username: user,
           password: pass

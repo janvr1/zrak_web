@@ -86,7 +86,7 @@ export default {
 
       let request_config = {
         method: "post",
-        url: "http://api.zrak.janvr.wtf/users",
+        url: "https://api.zrak.janvr.wtf/users",
         data: request_data
       };
 

@@ -44,7 +44,7 @@ export default {
     let user = store.getters.user;
     let pass = store.getters.password;
     axios
-      .get("http://api.zrak.janvr.wtf/devices", {
+      .get("https://api.zrak.janvr.wtf/devices", {
         auth: { username: user, password: pass }
       })
       .then(response => {

@@ -72,7 +72,7 @@ export default {
       let password = this.password;
 
       axios
-        .get("http://api.zrak.janvr.wtf/users", {
+        .get("https://api.zrak.janvr.wtf/users", {
           auth: { username: username, password: password }
         })
         .then(response => {

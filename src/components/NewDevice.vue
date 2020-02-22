@@ -67,7 +67,7 @@ export default {
 
       let request_config = {
         method: "post",
-        url: "http://api.zrak.janvr.wtf/devices",
+        url: "https://api.zrak.janvr.wtf/devices",
         data: {
           device_name: dev_name,
           device_location: dev_location,

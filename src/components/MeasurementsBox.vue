@@ -47,7 +47,7 @@ export default {
 
       let request_config = {
         method: "delete",
-        url: "http://api.zrak.janvr.wtf/measurements?measurement_id=" + meas_id,
+        url: "https://api.zrak.janvr.wtf/measurements?measurement_id=" + meas_id,
         auth: { username: username, password: password }
       };
 
@@ -68,7 +68,7 @@ export default {
 
     axios
       .get(
-        "http://api.zrak.janvr.wtf/measurements?device_id=" +
+        "https://api.zrak.janvr.wtf/measurements?device_id=" +
           this.id +
           "&lim=" +
           20,

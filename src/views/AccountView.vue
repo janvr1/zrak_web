@@ -106,7 +106,7 @@ export default {
 
       let request_config = {
         method: "put",
-        url: "http://api.zrak.janvr.wtf/users",
+        url: "https://api.zrak.janvr.wtf/users",
         auth: {
           username: username,
           password: password
@@ -137,7 +137,7 @@ export default {
       let password = store.getters.password;
       let request_config = {
         method: "delete",
-        url: "http://api.zrak.janvr.wtf/users",
+        url: "https://api.zrak.janvr.wtf/users",
         auth: {
           username: username,
           password: password
@@ -162,7 +162,7 @@ export default {
 
     let request_config = {
       method: "get",
-      url: "http://api.zrak.janvr.wtf/users",
+      url: "https://api.zrak.janvr.wtf/users",
       auth: {
         username: username,
         password: password
