@@ -35,10 +35,10 @@
 
       <div class="navbar-menu" id="navbarMenu" :class="{'is-active':burgerOpen}">
         <div class="navbar-start">
-          <a class="navbar-item" @click="goHome()">
+          <a href="/home" class="navbar-item">
             <b>Home</b>
           </a>
-          <a class="navbar-item" @click="goAccount()">
+          <a href="/account" class="navbar-item">
             <b>Account</b>
           </a>
         </div>
@@ -60,7 +60,6 @@
 <script>
 import store from "@/store/index.js";
 import router from "@/router/index.js";
-
 
 export default {
   data() {

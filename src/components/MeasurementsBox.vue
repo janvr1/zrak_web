@@ -124,8 +124,8 @@ export default {
         });
     },
     refreshMeasurements: function() {
-      console.log(this.datetime_start);
-      console.log(this.datetime_end);
+      // console.log(this.datetime_start);
+      // console.log(this.datetime_end);
       this.getMeasurements();
     },
 
