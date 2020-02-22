@@ -1,6 +1,13 @@
 <template>
   <div class="box">
-    <p class="title">Edit device</p>
+    <ConfirmDialog
+      v-if="deleteActive"
+      :message="deleteMessage"
+      @confirm="deleteDevice()"
+      @deny="deleteActive=false"
+    />
+    <h1 class="title">Edit device</h1>
+    <hr />
     <form @submit.prevent="editDevice()" style="text-align:left">
       <div class="field">
         <label class="label">Name</label>
@@ -34,7 +41,7 @@
           <button type="submit" class="button is-link is-normal">Edit</button>
         </div>
         <div class="control">
-          <button @click.prevent="deleteDevice()" class="button is-danger is-normal">Delete</button>
+          <button @click.prevent="deleteActive=true" class="button is-danger is-normal">Delete</button>
         </div>
         <div class="control">
           <button
@@ -52,16 +59,23 @@
 import store from "@/store/index";
 import axios from "axios";
 import router from "@/router/index";
+import ConfirmDialog from "./ConfirmDialog";
 
 export default {
   name: "EditDevice",
+
+  components: {
+    ConfirmDialog
+  },
+
   data() {
     return {
-      isOpen: false,
       name: String(),
       location: String(),
       variables: String(),
-      msg: String()
+      deleteActive: false,
+      msg: String(),
+      deleteMessage: "Are you sure you want to delete this device?"
     };
   },
 
@@ -73,7 +87,7 @@ export default {
     editDevice: function() {
       let dev_name = this.name;
       let dev_location = this.location;
-      let variables = this.variables.split(",");
+      let variables = this.variables.replace(/\s/g,'').split(",");
       let user = store.getters.user;
       let pass = store.getters.password;
 

@@ -1,62 +1,70 @@
 <template>
-  <div class="columns is-desktop is-centered is-vcentered">
-    <div class="column is-one-quarter">
-      <div class="box">
-        <h1 class="title">Edit your account</h1>
+  <div>
+    <div class="columns is-desktop is-centered is-vcentered">
+      <div class="column is-one-quarter">
+        <div class="box">
+          <ConfirmDialog
+            v-if="deleteActive"
+            :message="deleteMessage"
+            @confirm="deleteUser()"
+            @deny="deleteActive=false"
+          />
+          <h1 class="title">Edit your account</h1>
 
-        <form @submit.prevent="editUser()" style="text-align:left">
+          <form @submit.prevent="editUser()" style="text-align:left">
+            <div class="field">
+              <label class="label">Username: {{username}}</label>
+              <div class="control">
+                <input class="input" v-model="new_username" placeholder="New username" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Email: {{email}}</label>
+              <div class="control">
+                <input class="input" v-model="new_email" placeholder="New email" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">
+                <input
+                  class="input"
+                  v-model="new_password"
+                  placeholder="New password"
+                  type="password"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Confirm assword</label>
+              <div class="control">
+                <input
+                  class="input"
+                  v-model="confirm_password"
+                  placeholder="Confirm password"
+                  type="password"
+                />
+              </div>
+            </div>
+            <article v-if="msg!=''" class="message is-danger">
+              <div class="message-body is-danger">{{msg}}</div>
+            </article>
+            <div class="field">
+              <div class="control" style="text-align: center;">
+                <button type="submit" class="button is-link">Submit</button>
+              </div>
+            </div>
+          </form>
+          <br />
           <div class="field">
-            <label class="label">Username: {{username}}</label>
-            <div class="control">
-              <input class="input" v-model="new_username" placeholder="New username" />
+            <div class="control" style="text-align:center">
+              <p>Would you like to delete your account?</p>
             </div>
           </div>
           <div class="field">
-            <label class="label">Email: {{email}}</label>
-            <div class="control">
-              <input class="input" v-model="new_email" placeholder="New email" />
+            <div class="control" style="text-align:center">
+              <button class="button is-danger" @click="deleteActive=true">Click here</button>
             </div>
-          </div>
-          <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-              <input
-                class="input"
-                v-model="new_password"
-                placeholder="New password"
-                type="password"
-              />
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Confirm assword</label>
-            <div class="control">
-              <input
-                class="input"
-                v-model="confirm_password"
-                placeholder="Confirm password"
-                type="password"
-              />
-            </div>
-          </div>
-          <article v-if="msg!=''" class="message is-danger">
-            <div class="message-body is-danger">{{msg}}</div>
-          </article>
-          <div class="field">
-            <div class="control" style="text-align: center;">
-              <button type="submit" class="button is-link">Submit</button>
-            </div>
-          </div>
-        </form>
-        <br />
-        <div class="field">
-          <div class="control" style="text-align:center">
-            <p>Would you like to delete your account?</p>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control" style="text-align:center">
-            <button class="button is-danger" @click="deleteUser">Click here</button>
           </div>
         </div>
       </div>
@@ -65,11 +73,18 @@
 </template>
 
 <script>
-import store from "@/store/index";
+import store from "../store/index";
 import axios from "axios";
+import router from '../router/index'
+import ConfirmDialog from "../components/ConfirmDialog";
 
 export default {
   name: "AccountView",
+
+  components: {
+    ConfirmDialog
+  },
+
   data() {
     return {
       username: String(),
@@ -78,7 +93,9 @@ export default {
       new_email: String(),
       new_password: String(),
       confirm_password: String(),
-      msg: String()
+      msg: String(),
+      deleteActive: false,
+      deleteMessage: "Are you sure you want to delete your account?"
     };
   },
 
@@ -143,16 +160,18 @@ export default {
           password: password
         }
       };
-      if (confirm("Are you sure?")) {
-        axios(request_config)
-          .then(() => {
-            store.commit("setAuthorized", false);
-            window.location.reload();
-          })
-          .catch(() => {
-            // console.log(error.response.data);
-          });
-      }
+
+      axios(request_config)
+        .then(() => {
+          store.commit("setAuthorized", false);
+          store.commit('setUser', "");
+          store.commit('setPassword', "");
+          router.push('/login?deleted')
+          window.location.reload();
+        })
+        .catch(() => {
+          // console.log(error.response.data);
+        });
     }
   },
 

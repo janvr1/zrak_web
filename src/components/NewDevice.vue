@@ -1,6 +1,7 @@
 <template>
   <div class="box">
     <h1 class="title">New device</h1>
+    <hr/>
     <form @submit.prevent="addNewDevice()" style="text-align:left">
       <div class="field">
         <label class="label">Name</label>
@@ -61,7 +62,7 @@ export default {
     addNewDevice: function() {
       let dev_name = this.name;
       let dev_location = this.location;
-      let variables = this.variables.split(",");
+      let variables = this.variables.replace(/\s/g,'').split(",");
       let user = store.getters.user;
       let pass = store.getters.password;
 

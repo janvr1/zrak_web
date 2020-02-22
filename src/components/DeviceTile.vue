@@ -1,10 +1,10 @@
 <template>
-  <div class="box">
+  <a class="box">
     <!-- <div class="content is-vcentered has-text-centered"> -->
       <h1 class="title">{{device.name}}</h1>
       <h1 class="subtitle">Location: {{device.location}}</h1>
     <!-- </div> -->
-  </div>
+  </a>
 </template>
 
 <script>

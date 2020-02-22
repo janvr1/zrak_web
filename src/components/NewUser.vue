@@ -1,6 +1,7 @@
 <template>
   <div id="register" class="box">
     <h1 class="title">Register</h1>
+    <hr />
     <form @submit.prevent="addNewUser()" style="text-align:left">
       <div class="field">
         <label class="label">Username</label>

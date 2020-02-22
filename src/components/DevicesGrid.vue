@@ -11,9 +11,9 @@
         </router-link>
       </div>
       <div class="column is-one-quarter">
-        <div class="box" style="height:100%" @click="newDeviceActive=true" id="addNew">
+        <a class="box" style="height:100%" @click="newDeviceActive=true" id="addNew">
           <h4 class="title is-4">Add new device</h4>
-        </div>
+        </a>
       </div>
     </div>
   </div>

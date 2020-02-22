@@ -1,13 +1,14 @@
 <template>
-  <div >
+  <div>
     <Modal v-if="newUserActive" @close="newUserActive=false">
       <NewUser @close="newUserActive=false" />
     </Modal>
 
-    <div class="columns is-desktop is-centered is-vcentered">
+    <div class="columns is-desktop is-centered is-vcentered" id="background">
       <div class="column is-one-quarter">
         <div id="login" class="box">
           <h1 class="title">Sign in</h1>
+          <hr />
           <form @submit.prevent="userLogin()">
             <div class="field">
               <label class="label">Username</label>
@@ -18,7 +19,13 @@
             <div class="field">
               <label class="label">Password</label>
               <div class="control">
-                <input required v-model="password" class="input" type="password" placeholder="Password" />
+                <input
+                  required
+                  v-model="password"
+                  class="input"
+                  type="password"
+                  placeholder="Password"
+                />
               </div>
             </div>
             <article v-if="msg!=''" class="message is-danger">
@@ -66,6 +73,13 @@ export default {
       newUserActive: false
     };
   },
+
+  created() {
+    if (this.$route.query.deleted !== undefined) {
+      this.msg = "Your account has been deleted";
+    }
+  },
+
   methods: {
     userLogin: function() {
       let username = this.username;
@@ -96,11 +110,12 @@ export default {
 </script>
 
 <style scoped>
-/* #login {
-  display: flex;
+#login {
+  /* display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: #f7f7f7;
-} */
+  background: #f7f7f7; */
+  margin-top: 30%;
+}
 </style>

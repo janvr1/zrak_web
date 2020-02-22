@@ -10,6 +10,7 @@
     <router-view/>-->
 
     <nav
+      id="nav"
       v-if="storage.getters.authorized == 'true'"
       class="navbar"
       role="navigation"
@@ -34,8 +35,8 @@
 
       <div class="navbar-menu" id="navbarMenu" :class="{'is-active':burgerOpen}">
         <div class="navbar-start">
-          <a class="navbar-item" @click="goHome()">Home</a>
-          <a class="navbar-item" @click="goAccount()">Account</a>
+          <a class="navbar-item" @click="goHome()"><b>Home</b></a>
+          <a class="navbar-item" @click="goAccount()"><b>Account</b></a>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
@@ -43,9 +44,11 @@
           </div>
         </div>
       </div>
+          <hr />
     </nav>
+
     <div @click="burgerOpen=false" id="background">
-      <router-view />
+      <router-view id="currentView"></router-view>
     </div>
   </div>
 </template>
@@ -90,5 +93,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: lightblue;
+  height: 100vh;
+}
+#nav {
+  background-color: aquamarine;
+  margin-bottom: 2%;
 }
 </style>
