@@ -4,8 +4,8 @@
       <NewUser @close="newUserActive=false" />
     </Modal>
 
-    <div class="columns is-desktop is-centered is-vcentered" id="background">
-      <div class="column is-one-quarter">
+    <div class="columns is-desktop" id="background">
+      <div class="column is-4 is-offset-4">
         <div id="login" class="box">
           <h1 class="title">Sign in</h1>
           <hr />
@@ -38,11 +38,12 @@
               </div>
             </div>
             <div class="field">
+              <label class="label">Don't yet have an account?</label>
               <div class="control" style="text-align: center;">
                 <button
                   class="button is-link is-light"
                   @click.prevent="newUserActive=true"
-                >Don't yet have an account? Register here</button>
+                >Register here</button>
               </div>
             </div>
           </form>
