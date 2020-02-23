@@ -1,76 +1,97 @@
 <template>
   <div class="box" style="text-align:left">
-    <div style="position:relative">
-      <button class="button is-success" id="refresh" @click="refreshMeasurements()">Refresh</button>
-      <p class="title is-3">Measurements</p>
-      <div class="columns is-desktop">
-        <div class="column">
-          <div class="field">
-            <label class="label">Start time</label>
-            <div class="control">
-              <datetime
-                type="datetime"
-                input-class="input"
-                input-style="text-align:left"
-                v-model="datetime_start"
-              ></datetime>
-            </div>
+    <div class="columns is-desktop">
+      <div class="column">
+        <p class="title is-3">Measurements</p>
+      </div>
+      <div class="column">
+        <div class="field is-grouped is-grouped-right">
+          <div class="control">
+            <button class="button is-success" @click="refreshMeasurements()">Refresh</button>
           </div>
-        </div>
-        <div class="column">
-          <div class="field">
-            <label class="label">End time</label>
-            <div class="control">
-              <datetime
-                input-class="input"
-                type="datetime"
-                input-style="text-align:left"
-                v-model="datetime_end"
-              ></datetime>
-            </div>
+          <div class="control">
+            <button
+              class="button is-danger"
+              @click="removeMeasurementsRange()"
+              title="Deletes the entire specified range"
+            >Delete</button>
           </div>
         </div>
       </div>
-      <div class="columns is-desktop">
-        <div class="column">
-          <div class="field">
-            <label class="label">Time format</label>
-            <div class="control">
-              <input class="input" v-model="date_format" type="text" />
-            </div>
+    </div>
+    <div class="columns is-desktop">
+      <div class="column">
+        <div class="field">
+          <label class="label">Start time</label>
+          <div class="control">
+            <datetime
+              type="datetime"
+              input-class="input"
+              input-style="text-align:left"
+              v-model="datetime_start"
+            ></datetime>
           </div>
         </div>
-        <div class="column">
-          <div class="field">
-            <label class="label">Limit</label>
-            <div class="control">
-              <input
-                class="input"
-                v-model="limit"
-                type="number"
-                title="Enter the maximum number of measurements to display"
-              />
-            </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">End time</label>
+          <div class="control">
+            <datetime
+              input-class="input"
+              type="datetime"
+              input-style="text-align:left"
+              v-model="datetime_end"
+            ></datetime>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-desktop">
+      <div class="column">
+        <div class="field">
+          <label class="label">Time format</label>
+          <div class="control">
+            <input class="input" v-model="date_format" type="text" />
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Limit</label>
+          <div class="control">
+            <input
+              class="input"
+              v-model="limit"
+              type="number"
+              title="Enter the maximum number of measurements to display"
+            />
           </div>
         </div>
       </div>
     </div>
 
     <hr />
-    <table v-if="msg==''" class="table is-striped is-fullwidth">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th v-for="variable in variables" :key="variable">{{variable}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(measurement, key) in measurements" :key="key">
-          <td>{{measurement.local_time.local().format(date_format)}}</td>
-          <td v-for="variable in variables" :key="variable">{{measurement[variable]}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table v-if="msg==''" class="table is-striped is-fullwidth">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th v-for="variable in variables" :key="variable">{{variable}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(measurement, key) in measurements" :key="key">
+            <td>{{measurement.local_time.local().format(date_format)}}</td>
+            <td v-for="variable in variables" :key="variable">{{measurement[variable]}}</td>
+            <td>
+              <a class="delete" @click="removeMeasurement(key)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <article v-if="msg!=''" class="message is-warning">
       <div class="message-body is-danger">{{msg}}</div>
     </article>
@@ -127,6 +148,34 @@ export default {
       // console.log(this.datetime_start);
       // console.log(this.datetime_end);
       this.getMeasurements();
+    },
+
+    removeMeasurementsRange: function() {
+      let user = store.getters.user;
+      let pass = store.getters.password;
+
+      let url = "https://api.zrak.janvr.wtf/measurements?device_id=" + this.id;
+
+      if (this.datetime_start != "") {
+        url =
+          url +
+          "&start=" +
+          this.datetime_start.replace(/(-|:)/g, "").slice(0, -5);
+      }
+      if (this.datetime_end != "") {
+        url =
+          url + "&stop=" + this.datetime_end.replace(/(-|:)/g, "").slice(0, -5);
+      }
+
+      axios
+        .delete(url, { auth: { username: user, password: pass } })
+        .then(() => {
+          this.refreshMeasurements();
+          this.msg = "";
+        })
+        .catch(error => {
+          this.msg = error.response.data;
+        });
     },
 
     getMeasurements: function() {
