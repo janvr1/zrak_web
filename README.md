@@ -12,11 +12,11 @@ Spletna aplikacija omogoča dostop do naslednjih funkcionalnosti API-ja:
 - Pregled meritev posamezne naprave
 - Brisanje meritev
 
-Delujoča verzija aplikacije je dostopna na [web.zrak.janvr.wtf](web.zrak.janvr.wtf). Za vstop se lahko ustvari nov uporabnik ali pa se uporabi že obstoječ demo uporabnik (uporabniško ime: test, geslo: test).
+Delujoča verzija aplikacije je dostopna na [web.zrak.janvr.wtf](https://web.zrak.janvr.wtf). Za vstop se lahko ustvari nov uporabnik ali pa se uporabi že obstoječ demo uporabnik (uporabniško ime: test, geslo: test).
 
-Aplikacija je izdelana s pomočjo JavaScript ogrodja [Vue.js](vuejs.org) in CSS ogrodja [Bulma](bulma.io). 
+Aplikacija je izdelana s pomočjo JavaScript ogrodja [Vue.js](https://vuejs.org) in CSS ogrodja [Bulma](https://bulma.io). 
 
-Za zagon aplikacije na lastnem računalniku potrebujemo nameščeno JavaScript okolje [Node.js](nodejs.org). Nato odpremo ukazno vrstico v mapi tega repozitorija in izvedemo ukaze:
+Za zagon aplikacije na lastnem računalniku potrebujemo nameščeno JavaScript okolje [Node.js](https://nodejs.org). Nato odpremo ukazno vrstico v mapi tega repozitorija in izvedemo ukaze:
 ```
 $ npm install
 $ npm run serve
