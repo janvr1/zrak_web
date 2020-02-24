@@ -137,10 +137,8 @@ export default {
       axios(request_config)
         .then(() => {
           router.push("/home");
-          // console.log(response.data);
         })
         .catch(() => {
-          // console.log(error.response.data);
         });
     }
   }

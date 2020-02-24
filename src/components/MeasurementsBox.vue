@@ -1,6 +1,6 @@
 <template>
   <div class="box" style="text-align:left">
-    <div class="columns is-desktop">
+    <div class="columns">
       <div class="column">
         <p class="title is-3">Measurements</p>
       </div>
@@ -137,16 +137,12 @@ export default {
 
       axios(request_config)
         .then(() => {
-          // console.log(response);
           window.location.reload();
         })
         .catch(() => {
-          // console.log(error.response.data);
         });
     },
     refreshMeasurements: function() {
-      // console.log(this.datetime_start);
-      // console.log(this.datetime_end);
       this.getMeasurements();
     },
 

@@ -117,8 +117,6 @@ export default {
       if (new_email != "") request_data.email = new_email;
       if (new_password != "") request_data.password = new_password;
 
-      // console.log(request_data);
-
       let request_config = {
         method: "put",
         url: "https://api.zrak.janvr.wtf/users",
@@ -131,7 +129,6 @@ export default {
 
       axios(request_config)
         .then(response => {
-          // console.log(response);
           this.username = response.data.username;
           this.email = response.data.email;
 
@@ -142,7 +139,6 @@ export default {
           store.commit("setUser", this.username);
         })
         .catch(error => {
-          // console.log(error.response.data);
           this.msg = error.response.data;
         });
     },
@@ -168,7 +164,6 @@ export default {
           window.location.reload();
         })
         .catch(() => {
-          // console.log(error.response.data);
         });
     }
   },

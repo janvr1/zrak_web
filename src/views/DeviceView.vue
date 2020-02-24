@@ -27,7 +27,7 @@ import MeasurementsBox from "@/components/MeasurementsBox";
 import EditDevice from "@/components/EditDevice";
 import store from "@/store/index.js";
 import Modal from "../components/Modal";
-import PlotBox from '../components/PlotBox'
+import PlotBox from "../components/PlotBox";
 
 export default {
   name: "DeviceView",
@@ -69,7 +69,6 @@ export default {
             this.variables.push(this.device[key]);
           }
         }
-        // console.log(this.variables)
       });
   }
 };
@@ -77,6 +76,6 @@ export default {
 
 <style scoped>
 .columns {
-  background-color: lightblue; 
- }
+  background-color: lightblue;
+}
 </style>

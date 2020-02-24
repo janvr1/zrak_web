@@ -1,32 +1,39 @@
 <template>
   <div class="box">
-    <div style="position:relative; text-align:left">
-      <button class="button is-link" id="editDeviceBtn" @click="$emit('editDeviceClicked')">Edit Device</button>
-
-      <p class="title">Device Info</p>
-      <table class="table">
-        <tr>
-          <th>Name</th>
-          <td>{{device.name}}</td>
-        </tr>
-        <tr>
-          <th>Device ID</th>
-          <td>{{device.id}}</td>
-        </tr>
-        <tr>
-          <th>Location</th>
-          <td>{{device.location}}</td>
-        </tr>
-        <tr>
-          <th>Time created</th>
-          <td>{{moment.utc(this.device.time_created, 'YYYY-MM-DD HH:mm:ss').local().format("H:mm, MMMM Do YYYY")}}</td>
-        </tr>
-        <tr>
-          <th>Variables</th>
-          <td>{{variables.join(", ")}}</td>
-        </tr>
-      </table>
+    <div class="columns">
+      <div class="column">
+        <p class="title is-3" style="text-align:left">Device Info</p>
+      </div>
+      <div class="column">
+        <div class="field is-grouped is-grouped-right">
+          <div class="control">
+            <button class="button is-link" @click="$emit('editDeviceClicked')">Edit Device</button>
+          </div>
+        </div>
+      </div>
     </div>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <td>{{device.name}}</td>
+      </tr>
+      <tr>
+        <th>Device ID</th>
+        <td>{{device.id}}</td>
+      </tr>
+      <tr>
+        <th>Location</th>
+        <td>{{device.location}}</td>
+      </tr>
+      <tr>
+        <th>Time created</th>
+        <td>{{moment.utc(this.device.time_created, 'YYYY-MM-DD HH:mm:ss').local().format("H:mm, MMMM Do YYYY")}}</td>
+      </tr>
+      <tr>
+        <th>Variables</th>
+        <td>{{variables.join(", ")}}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
