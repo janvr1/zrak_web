@@ -1,5 +1,11 @@
 <template>
   <div class="box" style="text-align:left">
+    <ConfirmDialog
+      v-if="deleteActive"
+      :message="deleteMessage"
+      @confirm="removeMeasurementsRange()"
+      @deny="deleteActive=false"
+    />
     <div class="columns">
       <div class="column">
         <p class="title is-3">Measurements</p>
@@ -12,7 +18,7 @@
           <div class="control">
             <button
               class="button is-danger"
-              @click="removeMeasurementsRange()"
+              @click="deleteActive=true"
               title="Deletes the entire specified range"
             >Delete</button>
           </div>
@@ -102,12 +108,17 @@
 import axios from "axios";
 import store from "../store/index";
 import moment from "moment";
+import ConfirmDialog from "./ConfirmDialog";
 
 export default {
   name: "MeasurementsBox",
   props: {
     id: Number,
     variables: Array
+  },
+
+  components: {
+    ConfirmDialog
   },
 
   data() {
@@ -117,7 +128,9 @@ export default {
       date_format: "HH:mm DD/MM/YY",
       datetime_start: String(),
       datetime_end: String(),
-      limit: 20
+      limit: 20,
+      deleteMessage: "Are you sure you want to delete these measurements?",
+      deleteActive: false
     };
   },
 
@@ -139,8 +152,7 @@ export default {
         .then(() => {
           window.location.reload();
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     },
     refreshMeasurements: function() {
       this.getMeasurements();
@@ -172,6 +184,7 @@ export default {
         .catch(error => {
           this.msg = error.response.data;
         });
+      this.deleteActive = false;
     },
 
     getMeasurements: function() {
