@@ -40,6 +40,8 @@ export default {
   },
   methods: {
     updateMeasurements: function(measurements, variables) {
+      //console.log("variables: " + variables);
+      //console.log("measurements: " + Object.keys(measurements));
       this.variables = variables;
       let labels = Array();
       let obj_meas = Object();

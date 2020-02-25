@@ -225,6 +225,7 @@ export default {
             this.measurements = measurements;
             this.msg = "";
             this.$emit("newMeasurements", measurements);
+            //console.log("newMeasurements emitted");
           } else {
             this.msg = "No measurements were found";
           }

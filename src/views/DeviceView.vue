@@ -75,12 +75,19 @@ export default {
             this.variables.push(this.device[key]);
           }
         }
+        //console.log("deviceview axios finish");
+        this.$refs.plotbox.updateMeasurements(
+          this.measurements,
+          this.variables
+        );
       });
   },
 
   methods: {
     updateMeasurements: function(measurements) {
-      this.$refs.plotbox.updateMeasurements(measurements, this.variables);
+      this.measurements = measurements;
+      this.$refs.plotbox.updateMeasurements(this.measurements, this.variables);
+      //console.log("updateMeasurementsDeviceView");
     }
   }
 };
