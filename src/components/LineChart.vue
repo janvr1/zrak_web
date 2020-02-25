@@ -14,7 +14,7 @@ export default {
 
   mounted() {
     this.renderChart(this.chartData, this.options);
-    console.log("LineChart mounted");
+    //console.log("LineChart mounted");
   }
 };
 </script>
