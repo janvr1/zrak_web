@@ -6,7 +6,7 @@
       @confirm="removeMeasurementsRange()"
       @deny="deleteActive=false"
     />
-    <div class="columns">
+    <div class="columns is-mobile">
       <div class="column">
         <p class="title is-3">Measurements</p>
       </div>
@@ -154,6 +154,7 @@ export default {
         })
         .catch(() => {});
     },
+
     refreshMeasurements: function() {
       this.getMeasurements();
     },
@@ -223,6 +224,7 @@ export default {
             }
             this.measurements = measurements;
             this.msg = "";
+            this.$emit("newMeasurements", measurements);
           } else {
             this.msg = "No measurements were found";
           }

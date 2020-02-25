@@ -6,7 +6,11 @@
 
     <div class="columns">
       <div class="column">
-        <MeasurementsBox :id="device_id" :variables="variables" />
+        <MeasurementsBox
+          :id="device_id"
+          :variables="variables"
+          @newMeasurements="updateMeasurements"
+        />
       </div>
       <div class="column is-one-third">
         <DeviceInfoBox
@@ -14,7 +18,7 @@
           :variables="variables"
           @editDeviceClicked="editDeviceActive=true"
         />
-        <PlotBox />
+        <PlotBox :measurements="measurements" :variables="variables" ref="plotbox" />
       </div>
     </div>
   </div>
@@ -28,6 +32,7 @@ import EditDevice from "@/components/EditDevice";
 import store from "@/store/index.js";
 import Modal from "../components/Modal";
 import PlotBox from "../components/PlotBox";
+// import moment from "moment"
 
 export default {
   name: "DeviceView",
@@ -49,7 +54,8 @@ export default {
       device_id: Number(),
       device: Object(),
       variables: Array(),
-      editDeviceActive: false
+      editDeviceActive: false,
+      measurements: Object()
     };
   },
 
@@ -70,6 +76,12 @@ export default {
           }
         }
       });
+  },
+
+  methods: {
+    updateMeasurements: function(measurements) {
+      this.$refs.plotbox.updateMeasurements(measurements, this.variables);
+    }
   }
 };
 </script>

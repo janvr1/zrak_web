@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="columns">
+    <div class="columns is-mobile">
       <div class="column">
         <p class="title is-3" style="text-align:left">Device Info</p>
       </div>
