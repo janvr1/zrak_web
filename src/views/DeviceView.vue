@@ -12,7 +12,7 @@
           @newMeasurements="updateMeasurements"
         />
       </div>
-      <div class="column is-one-third">
+      <div class="column is-5">
         <DeviceInfoBox
           :device="device"
           :variables="variables"
