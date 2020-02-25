@@ -4,7 +4,7 @@
       <NewDevice @close="newDeviceActive=false" />
     </Modal>
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-centered">
       <div v-for="device in devices" :key="device.id" class="column is-one-quarter">
         <router-link :to="'/device/'+device.id">
           <DeviceTile :device="device" style="height:100%" />
