@@ -5,9 +5,7 @@
       <div class="checkboxes">
         <span>
           <span v-for="variable in variables" :key="variable">
-            <label :for="variable">
-              <b>{{ variable }}</b>
-            </label>
+            <label :for="variable">{{ variable }}</label>
             <input type="checkbox" :id="variable" :value="variable" v-model="plotVars" />
           </span>
         </span>
@@ -113,10 +111,29 @@ export default {
                     second: "H:mm:ss",
                     millisecond: "H:mm:ss.SSS"
                   }
+                },
+                gridLines: {
+                  zeroLineColor: "rgba(0, 0, 0, 0.1)",
+                  tickMarkLength: 0
+                },
+                ticks: {
+                  padding: 10
+                }
+              }
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  zeroLineColor: "rgba(0, 0, 0, 0.1)",
+                  tickMarkLength: 0
+                },
+                ticks: {
+                  padding: 10
                 }
               }
             ]
           },
+
           tooltips: {
             callbacks: {
               title: function(tooltipItems, data) {
