@@ -27,7 +27,7 @@
       </tr>
       <tr>
         <th>Time created</th>
-        <td>{{moment.utc(this.device.time_created, 'YYYY-MM-DD HH:mm:ss').local().format("H:mm, MMMM Do YYYY")}}</td>
+        <td>{{moment.utc(this.device.time_created, 'YYYY-MM-DD HH:mm:ss').local().format("H:mm, MMM Do YYYY")}}</td>
       </tr>
       <tr>
         <th>Variables</th>

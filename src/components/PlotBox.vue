@@ -5,7 +5,9 @@
       <div class="checkboxes">
         <span>
           <span v-for="variable in variables" :key="variable">
-            <label :for="variable"><b>{{ variable }}</b></label>
+            <label :for="variable">
+              <b>{{ variable }}</b>
+            </label>
             <input type="checkbox" :id="variable" :value="variable" v-model="plotVars" />
           </span>
         </span>
@@ -35,7 +37,18 @@ export default {
       chartOptionsObj: Object(),
       plotVars: Array(),
       variables: Array(),
-      variableColors: ["#e6194B", "#3cb44b", "#ffe119", "#4363d8", "#f58231", "#911eb4", "#bfef45", "#469990", "#800000", "#000075"]
+      variableColors: [
+        "#e6194B",
+        "#3cb44b",
+        "#ffe119",
+        "#4363d8",
+        "#f58231",
+        "#911eb4",
+        "#bfef45",
+        "#469990",
+        "#800000",
+        "#000075"
+      ]
     };
   },
   methods: {
@@ -43,38 +56,34 @@ export default {
       //console.log("variables: " + variables);
       //console.log("measurements: " + Object.keys(measurements));
       this.variables = variables;
-      let labels = Array();
-      let obj_meas = Object();
 
-      for (var variable of this.variables) {
-        obj_meas[variable] = Array();
-      }
+      let chartDataObj = Object();
+      let chartOptionsObj = Object();
 
-      for (let key of Object.keys(measurements)) {
-        let measurement = measurements[key];
-        labels.push(measurement.local_time.local().format("HH:mm"));
-        for (let variable of this.variables) {
-          obj_meas[variable].push(measurement[variable]);
-        }
-      }
-
-      labels = labels.reverse();
-
-      let chartData_obj = Object();
-      let chartOptions_obj = Object();
-
-      for (let variable of this.variables) {
+      for (let variable of variables) {
         let chartdata = Object();
-        chartdata.labels = labels;
         chartdata.datasets = Array();
         let dataset = Object();
-        dataset.data = obj_meas[variable].reverse();
+        let data = Array();
+
+        for (let key of Object.keys(measurements)) {
+          let measurement = measurements[key];
+          let tmp_obj = {
+            t: measurement.local_time,
+            y: measurement[variable]
+          };
+          data.push(tmp_obj);
+        }
+
+        dataset.data = data;
         dataset.label = variable;
         dataset.fill = false;
-        dataset.backgroundColor = this.variableColors[this.variables.indexOf(variable)]
-        chartdata.datasets.push(dataset);
+        dataset.backgroundColor = this.variableColors[
+          this.variables.indexOf(variable)
+        ];
 
-        chartData_obj[variable] = chartdata;
+        chartdata.datasets.push(dataset);
+        chartDataObj[variable] = chartdata;
 
         let chartoptions = {
           responsive: true,
@@ -91,13 +100,37 @@ export default {
             line: {
               borderWidth: 2
             }
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  // unit: "minute",
+                  displayFormats: {
+                    minute: "H:mm",
+                    hour: "H:mm",
+                    second: "H:mm:ss",
+                    millisecond: "H:mm:ss.SSS"
+                  }
+                }
+              }
+            ]
+          },
+          tooltips: {
+            callbacks: {
+              title: function(tooltipItems, data) {
+                var time = data.datasets[0].data[tooltipItems[0].index].t || "";
+                return time.local().format("H:mm:ss, MMM Do YYYY");
+              }
+            }
           }
         };
-        chartOptions_obj[variable] = chartoptions;
+        chartOptionsObj[variable] = chartoptions;
       }
 
-      this.chartDataObj = chartData_obj;
-      this.chartOptionsObj = chartOptions_obj;
+      this.chartDataObj = chartDataObj;
+      this.chartOptionsObj = chartOptionsObj;
     }
   }
 };
@@ -110,7 +143,6 @@ export default {
 
 .checkboxes input {
   padding: 0px 0px 0px 0px;
-
 }
 
 .checkboxes label {
