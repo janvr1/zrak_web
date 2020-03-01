@@ -22,9 +22,3 @@ $ npm install
 $ npm run serve
 ```
 Ukaz ```npm install``` namesti vse potrebne knjižnice in se izvede samo ob prvem zagonu aplikacije.
-
-
-### Screenshots
-![Pregled naprav](./screenshots/devices.png)
-![Pregled meritev](./screenshots/measurements.png)
-![Urejanje naprave](./screenshots/editDevice.png)
