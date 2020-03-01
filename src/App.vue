@@ -1,14 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div v-if="storage.getters.authorized == 'true'" id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/account">
-      Account {{storage.getters.authorized == "true" ? "("+storage.getters.user+")" : ""}}
-      </router-link>
-      <span @click="logout">Logout</span>
-    </div>
-    <router-view/>-->
-
     <nav
       id="nav"
       v-if="storage.getters.authorized == 'true'"
