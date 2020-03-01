@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import store from "@/store/index";
-import axios from "axios";
-import router from "@/router/index";
+import store from "../store/index";
+import zrak_api from "../main";
+import router from "../router/index";
 import ConfirmDialog from "./ConfirmDialog";
 
 export default {
@@ -104,7 +104,7 @@ export default {
 
       let request_config = {
         method: "put",
-        url: "https://api.zrak.janvr.wtf/devices?device_id=" + this.dev_id,
+        url: "/devices?device_id=" + this.dev_id,
         data: request_data,
         auth: {
           username: user,
@@ -112,7 +112,7 @@ export default {
         }
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(() => {
           window.location.reload();
         })
@@ -127,19 +127,18 @@ export default {
 
       let request_config = {
         method: "delete",
-        url: "https://api.zrak.janvr.wtf/devices?device_id=" + this.dev_id,
+        url: "/devices?device_id=" + this.dev_id,
         auth: {
           username: user,
           password: pass
         }
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(() => {
           router.push("/home");
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
   }
 };

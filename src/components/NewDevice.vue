@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <h1 class="title">New device</h1>
-    <hr/>
+    <hr />
     <form @submit.prevent="addNewDevice()" style="text-align:left">
       <div class="field">
         <label class="label">Name</label>
@@ -36,7 +36,11 @@
           <button type="submit" class="button is-link">Create</button>
         </div>
         <div class="control">
-          <button type="reset" class="button is-link is-light" @click.prevent="$emit('close')">Cancel</button>
+          <button
+            type="reset"
+            class="button is-link is-light"
+            @click.prevent="$emit('close')"
+          >Cancel</button>
         </div>
       </div>
     </form>
@@ -44,8 +48,8 @@
 </template>
 
 <script>
-import store from "@/store/index.js";
-import axios from "axios";
+import store from "../store/index";
+import zrak_api from "../main";
 
 export default {
   name: "NewDevice",
@@ -62,13 +66,13 @@ export default {
     addNewDevice: function() {
       let dev_name = this.name;
       let dev_location = this.location;
-      let variables = this.variables.replace(/\s/g,'').split(",");
+      let variables = this.variables.replace(/\s/g, "").split(",");
       let user = store.getters.user;
       let pass = store.getters.password;
 
       let request_config = {
         method: "post",
-        url: "https://api.zrak.janvr.wtf/devices",
+        url: "/devices",
         data: {
           device_name: dev_name,
           device_location: dev_location,
@@ -80,7 +84,7 @@ export default {
         }
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(() => {
           window.location.reload();
         })

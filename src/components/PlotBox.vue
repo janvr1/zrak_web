@@ -51,8 +51,6 @@ export default {
   },
   methods: {
     updateMeasurements: function(measurements, variables) {
-      //console.log("variables: " + variables);
-      //console.log("measurements: " + Object.keys(measurements));
       this.variables = variables;
 
       let chartDataObj = Object();
@@ -104,7 +102,6 @@ export default {
               {
                 type: "time",
                 time: {
-                  // unit: "minute",
                   displayFormats: {
                     minute: "H:mm",
                     hour: "H:mm",
@@ -137,7 +134,7 @@ export default {
           tooltips: {
             callbacks: {
               title: function(tooltipItems, data) {
-                var time = data.datasets[0].data[tooltipItems[0].index].t || "";
+                let time = data.datasets[0].data[tooltipItems[0].index].t || "";
                 return time.local().format("H:mm:ss, MMM Do YYYY");
               }
             }

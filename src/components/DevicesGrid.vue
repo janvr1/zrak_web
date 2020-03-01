@@ -22,9 +22,9 @@
 <script>
 import DeviceTile from "./DeviceTile";
 import NewDevice from "./NewDevice";
-import axios from "axios";
 import store from "../store/index";
 import Modal from "./Modal";
+import zrak_api from "../main";
 
 export default {
   name: "DevicesGrid",
@@ -36,27 +36,27 @@ export default {
   data() {
     return {
       devices: Object(),
-      msg: "Add a new device",
       newDeviceActive: false
     };
   },
   mounted() {
     let user = store.getters.user;
     let pass = store.getters.password;
-    axios
-      .get("https://api.zrak.janvr.wtf/devices", {
-        auth: { username: user, password: pass }
-      })
-      .then(response => {
-        if (Object.keys(response.data).length > 0) {
-          this.devices = response.data;
-        } else {
-          this.msg = "You do not have any devices set up. Add a new one!";
-        }
-      })
-      .catch(error => {
-        this.msg = error.response.data;
-      });
+
+    let request_config = {
+      method: "get",
+      url: "/devices",
+      auth: {
+        username: user,
+        password: pass
+      }
+    };
+
+    zrak_api(request_config).then(response => {
+      if (Object.keys(response.data).length > 0) {
+        this.devices = response.data;
+      }
+    });
   }
 };
 </script>

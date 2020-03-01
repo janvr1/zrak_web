@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import zrak_api from "../main";
 
 export default {
   name: "NewUser",
@@ -87,11 +87,11 @@ export default {
 
       let request_config = {
         method: "post",
-        url: "https://api.zrak.janvr.wtf/users",
+        url: "/users",
         data: request_data
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(() => {
           window.location.reload();
         })
@@ -102,12 +102,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/* #register {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f7f7f7;
-} */
-</style>

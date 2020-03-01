@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import zrak_api from "../main";
 import store from "../store/index";
 import moment from "moment";
 import ConfirmDialog from "./ConfirmDialog";
@@ -143,12 +143,11 @@ export default {
 
       let request_config = {
         method: "delete",
-        url:
-          "https://api.zrak.janvr.wtf/measurements?measurement_id=" + meas_id,
+        url: "/measurements?measurement_id=" + meas_id,
         auth: { username: username, password: password }
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(() => {
           window.location.reload();
         })
@@ -163,7 +162,7 @@ export default {
       let user = store.getters.user;
       let pass = store.getters.password;
 
-      let url = "https://api.zrak.janvr.wtf/measurements?device_id=" + this.id;
+      let url = "/measurements?device_id=" + this.id;
 
       if (this.datetime_start != "") {
         url =
@@ -176,8 +175,16 @@ export default {
           url + "&stop=" + this.datetime_end.replace(/(-|:)/g, "").slice(0, -5);
       }
 
-      axios
-        .delete(url, { auth: { username: user, password: pass } })
+      let request_config = {
+        method: "delete",
+        url: url,
+        auth: {
+          username: user,
+          password: pass
+        }
+      };
+
+      zrak_api(request_config)
         .then(() => {
           this.refreshMeasurements();
           this.msg = "";
@@ -192,11 +199,7 @@ export default {
       let user = store.getters.user;
       let pass = store.getters.password;
 
-      let url =
-        "https://api.zrak.janvr.wtf/measurements?device_id=" +
-        this.id +
-        "&lim=" +
-        this.limit;
+      let url = "/measurements?device_id=" + this.id + "&lim=" + this.limit;
 
       if (this.datetime_start != "") {
         url =
@@ -209,14 +212,18 @@ export default {
           url + "&stop=" + this.datetime_end.replace(/(-|:)/g, "").slice(0, -5);
       }
 
-      axios
-        .get(url, { auth: { username: user, password: pass } })
+      let request_config = {
+        url: url,
+        method: "get",
+        auth: { username: user, password: pass }
+      };
+
+      zrak_api(request_config)
         .then(response => {
           if (Object.keys(response.data).length > 0) {
-            // this.measurements = response.data;
             let measurements = response.data;
 
-            for (var key of Object.keys(measurements)) {
+            for (let key of Object.keys(measurements)) {
               measurements[key].local_time = moment.utc(
                 measurements[key].time,
                 "YYYY-MM-DD HH:mm:ss"
@@ -225,13 +232,12 @@ export default {
             this.measurements = measurements;
             this.msg = "";
             this.$emit("newMeasurements", measurements);
-            //console.log("newMeasurements emitted");
           } else {
             this.msg = "No measurements were found";
           }
         })
-        .catch(() => {
-          // this.msg = error.response.data;
+        .catch(error => {
+          this.msg = error.response.data;
         });
     }
   },

@@ -22,15 +22,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setPassword (state, password) {
+    setPassword(state, password) {
       state.password = password
       localStorage.setItem("pass", password)
     },
-    setUser (state, username) {
+    setUser(state, username) {
       state.username = username
       localStorage.setItem("user", username)
     },
-    setAuthorized (state, auth) {
+    setAuthorized(state, auth) {
       state.authorized = auth
       localStorage.setItem("auth", auth)
     }

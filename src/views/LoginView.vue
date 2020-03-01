@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import store from "@/store/index.js";
-import axios from "axios";
-import router from "@/router/index.js";
-import NewUser from "@/components/NewUser";
-import Modal from "@/components/Modal";
+import store from "../store/index.js";
+import router from "../router/index.js";
+import NewUser from "../components/NewUser";
+import Modal from "../components/Modal";
+import zrak_api from "../main";
 
 export default {
   name: "LoginView",
@@ -86,16 +86,20 @@ export default {
       let username = this.username;
       let password = this.password;
 
-      axios
-        .get("https://api.zrak.janvr.wtf/users", {
-          auth: { username: username, password: password }
-        })
+      let request_config = {
+        url: "/users",
+        auth: {
+          username: username,
+          password: password
+        }
+      };
+
+      zrak_api(request_config)
         .then(response => {
           if (response.status == 200) {
             store.commit("setUser", username);
             store.commit("setPassword", password);
             store.commit("setAuthorized", "true");
-            // this.msg = "";
             router.push("/home");
           }
         })
@@ -112,11 +116,6 @@ export default {
 
 <style scoped>
 #login {
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: #f7f7f7; */
   margin-top: 30%;
 }
 </style>

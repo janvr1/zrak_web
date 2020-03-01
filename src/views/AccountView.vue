@@ -72,9 +72,9 @@
 
 <script>
 import store from "../store/index";
-import axios from "axios";
 import router from "../router/index";
 import ConfirmDialog from "../components/ConfirmDialog";
+import zrak_api from "../main";
 
 export default {
   name: "AccountView",
@@ -119,7 +119,7 @@ export default {
 
       let request_config = {
         method: "put",
-        url: "https://api.zrak.janvr.wtf/users",
+        url: "/users",
         auth: {
           username: username,
           password: password
@@ -127,7 +127,7 @@ export default {
         data: request_data
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(response => {
           this.username = response.data.username;
           this.email = response.data.email;
@@ -148,14 +148,14 @@ export default {
       let password = store.getters.password;
       let request_config = {
         method: "delete",
-        url: "https://api.zrak.janvr.wtf/users",
+        url: "/users",
         auth: {
           username: username,
           password: password
         }
       };
 
-      axios(request_config)
+      zrak_api(request_config)
         .then(() => {
           store.commit("setAuthorized", false);
           store.commit("setUser", "");
@@ -163,8 +163,7 @@ export default {
           router.push("/login?deleted");
           window.location.reload();
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     }
   },
 
@@ -174,14 +173,14 @@ export default {
 
     let request_config = {
       method: "get",
-      url: "https://api.zrak.janvr.wtf/users",
+      url: "/users",
       auth: {
         username: username,
         password: password
       }
     };
 
-    axios(request_config).then(response => {
+    zrak_api(request_config).then(response => {
       let account = response.data;
       this.username = account.username;
       this.email = account.email;

@@ -1,17 +1,16 @@
 <template>
   <div class="container">
-    <DevicesGrid/>
+    <DevicesGrid />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import DevicesGrid from '@/components/DevicesGrid'
+import DevicesGrid from "../components/DevicesGrid";
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {
     DevicesGrid
   }
-}
+};
 </script>

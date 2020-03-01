@@ -25,14 +25,13 @@
 </template>
 
 <script>
-import axios from "axios";
-import DeviceInfoBox from "@/components/DeviceInfoBox";
-import MeasurementsBox from "@/components/MeasurementsBox";
-import EditDevice from "@/components/EditDevice";
-import store from "@/store/index.js";
+import DeviceInfoBox from "../components/DeviceInfoBox";
+import MeasurementsBox from "../components/MeasurementsBox";
+import EditDevice from "../components/EditDevice";
+import store from "../store/index";
 import Modal from "../components/Modal";
 import PlotBox from "../components/PlotBox";
-// import moment from "moment"
+import zrak_api from "../main";
 
 export default {
   name: "DeviceView",
@@ -62,32 +61,26 @@ export default {
   mounted() {
     let user = store.getters.user;
     let pass = store.getters.password;
+    let request_config = {
+      url: "/devices?device_id=" + this.device_id,
+      auth: { username: user, password: pass }
+    };
+    zrak_api(request_config).then(response => {
+      this.device = response.data;
 
-    axios
-      .get("https://api.zrak.janvr.wtf/devices?device_id=" + this.device_id, {
-        auth: { username: user, password: pass }
-      })
-      .then(response => {
-        this.device = response.data;
-
-        for (var key of Object.keys(this.device).sort()) {
-          if (key.startsWith("var") && this.device[key] != null) {
-            this.variables.push(this.device[key]);
-          }
+      for (let key of Object.keys(this.device).sort()) {
+        if (key.startsWith("var") && this.device[key] != null) {
+          this.variables.push(this.device[key]);
         }
-        //console.log("deviceview axios finish");
-        this.$refs.plotbox.updateMeasurements(
-          this.measurements,
-          this.variables
-        );
-      });
+      }
+      this.$refs.plotbox.updateMeasurements(this.measurements, this.variables);
+    });
   },
 
   methods: {
     updateMeasurements: function(measurements) {
       this.measurements = measurements;
       this.$refs.plotbox.updateMeasurements(this.measurements, this.variables);
-      //console.log("updateMeasurementsDeviceView");
     }
   }
 };
