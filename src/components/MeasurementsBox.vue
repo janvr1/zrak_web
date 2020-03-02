@@ -78,8 +78,8 @@
     </div>
 
     <hr />
-    <div class="table-container">
-      <table v-if="msg==''" class="table is-striped is-fullwidth">
+    <div v-if="msg==''" class="table-container">
+      <table class="table is-striped is-fullwidth">
         <thead>
           <tr>
             <th>Time</th>
