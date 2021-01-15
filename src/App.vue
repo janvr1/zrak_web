@@ -8,9 +8,9 @@
       aria-label="main navigation"
     >
       <div class="navbar-brand">
-        <a class="navbar-item" href="/home">
+        <router-link class="navbar-item" to="/home">
           <img src="./assets/logo.png" />
-        </a>
+        </router-link>
         <a
           role="button"
           class="navbar-burger burger"
@@ -26,12 +26,12 @@
 
       <div class="navbar-menu" id="navbarMenu" :class="{'is-active':burgerOpen}">
         <div class="navbar-start">
-          <a href="/home" class="navbar-item">
+          <router-link to="/home" class="navbar-item">
             <b>Home</b>
-          </a>
-          <a href="/account" class="navbar-item">
+          </router-link>
+          <router-link to="/account" class="navbar-item">
             <b>Account</b>
-          </a>
+          </router-link>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
