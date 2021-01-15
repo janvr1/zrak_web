@@ -13,7 +13,7 @@ Vue.use(Datetime)
 Vue.config.productionTip = false
 
 const zrak_api = axios.create({
-  baseURL: 'https://api.zrak.janvr.wtf'
+  baseURL: 'https://api.zrak.janvr.me'
 });
 
 export default zrak_api
