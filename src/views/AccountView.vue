@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="field">
-            <label class="label">Confirm assword</label>
+            <label class="label">Confirm password</label>
             <div class="control">
               <input
                 class="input"
